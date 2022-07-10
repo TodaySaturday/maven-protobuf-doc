@@ -2,7 +2,7 @@ package com.hjfruit.plugin.service;
 
 import com.hjfruit.plugin.domain.constant.Constant;
 import com.hjfruit.plugin.domain.enums.MessageStr;
-import com.hjfruit.plugin.domain.utils.FileUtil;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class ProtoRead {
         for (String dependenciesPath : protocDependenciesPaths) {
             protoPath.append(Constant.CMD_PROTO_PATH).append(dependenciesPath);
         }
-        FileUtil.mkdir(docPath);
+        FileUtils.mkdir(docPath);
         for (String protobufPath : protobufPaths) {
             final String folderName = protobufPath.replace(classesPath + Constant.SLASH, Constant.EMPTY)
                     .replace(protocDependenciesPath + Constant.SLASH, Constant.EMPTY)
