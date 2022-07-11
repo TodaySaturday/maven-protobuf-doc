@@ -1,5 +1,7 @@
 package com.hjfruit.plugin.domain.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 /**
@@ -16,6 +18,6 @@ public class StrExpUtils {
     }
 
     public static <T extends String> T isNotBlankValue(T val1, T val2) {
-        return Objects.nonNull(val1) && !val1.isBlank() ? val1 : val2;
+        return Objects.nonNull(val1) && !val1.isEmpty() && Objects.equals(val1, StringUtils.EMPTY) ? val1 : val2;
     }
 }

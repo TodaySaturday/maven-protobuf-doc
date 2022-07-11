@@ -34,8 +34,8 @@ public class ProtoBuild {
 
     private final Collection<DocUpload> docUploads = new HashSet<>();
 
-    public ProtoBuild(String filePath, DocProperties properties, ProtoHandle protoHandle) {
-        this.docMdPath = filePath + Constant.DOCS_MD;
+    public ProtoBuild(DocProperties properties, ProtoHandle protoHandle) {
+        this.docMdPath = properties.getPath() + Constant.DOCS_MD;
         this.docProperties = properties;
         this.messagesMap = protoHandle.getMessagesMap();
         this.enumsMap = protoHandle.getEnumsMap();

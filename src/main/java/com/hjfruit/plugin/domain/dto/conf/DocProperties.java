@@ -6,6 +6,8 @@ package com.hjfruit.plugin.domain.dto.conf;
  */
 public class DocProperties {
 
+    private String path;
+
     private String apiUrl;
 
     private String apiKey;
@@ -14,6 +16,14 @@ public class DocProperties {
 
     public String getApiUrl() {
         return apiUrl;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public void setApiUrl(String apiUrl) {

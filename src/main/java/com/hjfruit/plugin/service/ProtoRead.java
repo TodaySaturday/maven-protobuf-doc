@@ -1,6 +1,7 @@
 package com.hjfruit.plugin.service;
 
 import com.hjfruit.plugin.domain.constant.Constant;
+import com.hjfruit.plugin.domain.dto.conf.DocProperties;
 import com.hjfruit.plugin.domain.enums.MessageStr;
 import org.apache.commons.io.FileUtils;
 
@@ -27,7 +28,8 @@ public class ProtoRead {
 
     private final Set<String> protocDependenciesPaths = new HashSet<>();
 
-    public ProtoRead(String filePath) throws IOException, InterruptedException {
+    public ProtoRead(DocProperties properties) throws IOException, InterruptedException {
+        final String filePath = properties.getPath();
         classesPath = filePath + Constant.CLASSES;
         docJsonPath = filePath + Constant.DOCS_JSON;
         protocDependenciesPath = filePath + Constant.PROTOC_DEPENDENCIES;
