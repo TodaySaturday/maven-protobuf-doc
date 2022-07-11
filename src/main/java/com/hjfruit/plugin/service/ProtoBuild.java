@@ -1,10 +1,12 @@
 package com.hjfruit.plugin.service;
 
+import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.constant.Constant;
 import com.hjfruit.plugin.domain.dto.*;
 import com.hjfruit.plugin.domain.dto.conf.DocProperties;
 import com.hjfruit.plugin.domain.dto.conf.DocUpload;
 import com.hjfruit.plugin.domain.enums.MessageStr;
+import com.hjfruit.plugin.domain.enums.ProtoProcess;
 import com.hjfruit.plugin.domain.utils.ConfigUtils;
 import com.hjfruit.plugin.domain.utils.StrExpUtils;
 import freemarker.template.Configuration;
@@ -54,6 +56,7 @@ public class ProtoBuild {
     private void buildProtobufMd(ProtoModel model) {
         final String directory = StrExpUtils.isNotBlankValue(model.getServiceDescription(), model.getServiceName());
         final String fileName = StrExpUtils.isNotBlankValue(model.getServiceMethod().getDescription(), model.getServiceMethod().getName());
+        ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_BUILD.getProcess(), fileName));
         FileUtils.mkdir(this.docMdPath + Constant.SLASH + directory);
         // 第五步：创建一个Writer对象，一般创建一FileWriter对象，指定生成的文件名。
         final String filePath = this.docMdPath + Constant.SLASH + directory + Constant.SLASH + fileName;

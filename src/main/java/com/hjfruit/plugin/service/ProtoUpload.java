@@ -1,8 +1,10 @@
 package com.hjfruit.plugin.service;
 
 import com.alibaba.fastjson.JSON;
+import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.dto.conf.DocProperties;
 import com.hjfruit.plugin.domain.dto.conf.DocUpload;
+import com.hjfruit.plugin.domain.enums.ProtoProcess;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,6 +24,7 @@ public class ProtoUpload {
 
     public static void upload(DocProperties properties, Collection<DocUpload> docUploads) throws IOException {
         for (DocUpload docUpload : docUploads) {
+            ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_UPLOAD.getProcess(), docUpload.getPage_title()));
             final String jsonParam = JSON.toJSONString(docUpload);
             OkHttpClient client = new OkHttpClient();
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParam);

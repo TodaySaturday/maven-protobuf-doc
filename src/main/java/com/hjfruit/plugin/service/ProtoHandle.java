@@ -1,8 +1,10 @@
 package com.hjfruit.plugin.service;
 
 import com.alibaba.fastjson.JSON;
+import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.dto.*;
 import com.hjfruit.plugin.domain.enums.MessageStr;
+import com.hjfruit.plugin.domain.enums.ProtoProcess;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -33,6 +35,7 @@ public class ProtoHandle {
         Validate.notNull(listFiles, MessageStr.NOT_FOUND_PROTOBUF.getMessage());
         final List<ProtoFile> protoFiles = new ArrayList<>();
         for (File file : listFiles) {
+            ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_HANDLE.getProcess(), file.getAbsolutePath()));
             final String fileContent = FileUtils.fileRead(file.getAbsolutePath());
             protoFiles.addAll(JSON.parseObject(fileContent, Proto.class).getFiles());
         }

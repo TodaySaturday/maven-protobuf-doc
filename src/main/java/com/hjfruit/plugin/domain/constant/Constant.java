@@ -35,19 +35,7 @@ public abstract class Constant {
 
     public static final String PROPERTIES_NAME = "/config/showdoc.properties";
 
-    public static final String PROPERTIES_URL = "apiUrl";
+    public static final String PROPERTIES_URL_FORMAT = "apiUrlFormat";
 
     public static final String PROTO_SUFFIX = ".proto";
-
-    public static final String PROTO_MD = ".md";
-
-    public static final String TARGET = "target";
-
-    public static final String POPUP_READ = "读取protobuf……";
-
-    public static final String POPUP_HANDLE = "处理protobuf……";
-
-    public static final String POPUP_BUILD = "构建文档……";
-
-    public static final String POPUP_UPLOAD = "上传文档……";
 }

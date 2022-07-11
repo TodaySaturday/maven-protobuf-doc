@@ -1,8 +1,10 @@
 package com.hjfruit.plugin.service;
 
+import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.constant.Constant;
 import com.hjfruit.plugin.domain.dto.conf.DocProperties;
 import com.hjfruit.plugin.domain.enums.MessageStr;
+import com.hjfruit.plugin.domain.enums.ProtoProcess;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -50,6 +52,7 @@ public class ProtoRead {
         }
         FileUtils.mkdir(docJsonPath);
         for (String protobufPath : protobufPaths) {
+            ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_READ.getProcess(), protobufPath));
             final String folderName = protobufPath.replace(classesPath + Constant.SLASH, Constant.EMPTY)
                     .replace(protocDependenciesPath + Constant.SLASH, Constant.EMPTY)
                     .replace(Constant.SLASH, "_");
