@@ -6,9 +6,9 @@ import java.util.Objects;
  * @author xianping
  * 2022/7/820:52
  */
-public class StrExpressionUtil {
+public class StrExpUtils {
 
-    private StrExpressionUtil() {
+    private StrExpUtils() {
     }
 
     public static <T extends String> T isNonNullValue(T val1, T val2) {

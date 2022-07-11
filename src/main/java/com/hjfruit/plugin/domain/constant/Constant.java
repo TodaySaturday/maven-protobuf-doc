@@ -4,41 +4,50 @@ package com.hjfruit.plugin.domain.constant;
  * @author xianping
  * 2022/6/1117:20
  */
-public interface Constant {
+public abstract class Constant {
 
-    String SLASH = "\\";
+    private Constant() {
+    }
 
-    String EMPTY = "";
+    public static final String SLASH = "\\";
 
-    String DOCS = SLASH + "docs";
+    public static final String EMPTY = "";
 
-    String CLASSES = SLASH + "classes";
+    public static final String DOCS = SLASH + "docs";
 
-    String PROTOC_DEPENDENCIES = SLASH + "protoc-dependencies";
+    public static final String DOCS_JSON = DOCS + SLASH + "json";
 
-    String EXCLUDE_SERVICE_PACKAGE = "google.longrunning";
+    public static final String DOCS_MD = DOCS + SLASH + "md";
 
-    String CMD_PROTO_PATH = " --proto_path=";
+    public static final String CLASSES = SLASH + "classes";
 
-    String CMD_FORMAT = "protoc --doc_out=%s --doc_opt=json,%s.json %s\\*.proto";
+    public static final String PROTOC_DEPENDENCIES = SLASH + "protoc-dependencies";
 
-    String TEMPLATE_DIRECTORY = "E:\\Projects\\maven-protobuf-doc\\src\\main\\resources\\template";
+    public static final String EXCLUDE_SERVICE_PACKAGE = "google.longrunning";
 
-    String TEMPLATE_PATH = "protobuf.ftl";
+    public static final String CMD_PROTO_PATH = " --proto_path=";
 
-    String PROPERTIES_NAME = "/config/showdoc.properties";
+    public static final String CMD_FORMAT = "protoc --doc_out=%s --doc_opt=json,%s.json %s\\*.proto";
 
-    String PROPERTIES_URL = "apiUrl";
+    public static final String TEMPLATE_DIRECTORY = "/template";
 
-    String PROTO_SUFFIX = ".proto";
+    public static final String TEMPLATE_PATH = "protobuf.ftl";
 
-    String TARGET = "target";
+    public static final String PROPERTIES_NAME = "/config/showdoc.properties";
 
-    String POPUP_READ = "读取protobuf……";
+    public static final String PROPERTIES_URL = "apiUrl";
 
-    String POPUP_HANDLE = "处理protobuf……";
+    public static final String PROTO_SUFFIX = ".proto";
 
-    String POPUP_BUILD = "构建文档……";
+    public static final String PROTO_MD = ".md";
 
-    String POPUP_UPLOAD = "上传文档……";
+    public static final String TARGET = "target";
+
+    public static final String POPUP_READ = "读取protobuf……";
+
+    public static final String POPUP_HANDLE = "处理protobuf……";
+
+    public static final String POPUP_BUILD = "构建文档……";
+
+    public static final String POPUP_UPLOAD = "上传文档……";
 }

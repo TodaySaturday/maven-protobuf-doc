@@ -6,28 +6,18 @@ package com.hjfruit.plugin.domain.dto.conf;
  */
 public class DocProperties {
 
-    private String url;
-
-    private String project;
+    private String apiUrl;
 
     private String apiKey;
 
     private String apiToken;
 
-    public String getUrl() {
-        return url;
+    public String getApiUrl() {
+        return apiUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getProject() {
-        return project;
-    }
-
-    public void setProject(String project) {
-        this.project = project;
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
     }
 
     public String getApiKey() {
@@ -44,10 +34,5 @@ public class DocProperties {
 
     public void setApiToken(String apiToken) {
         this.apiToken = apiToken;
-    }
-
-    @Override
-    public String toString() {
-        return project;
     }
 }

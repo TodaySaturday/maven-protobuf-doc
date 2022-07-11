@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class ProtoRead {
 
-    private final String docPath;
+    private final String docJsonPath;
 
     private final String classesPath;
 
@@ -29,7 +29,7 @@ public class ProtoRead {
 
     public ProtoRead(String filePath) throws IOException, InterruptedException {
         classesPath = filePath + Constant.CLASSES;
-        docPath = filePath + Constant.DOCS;
+        docJsonPath = filePath + Constant.DOCS_JSON;
         protocDependenciesPath = filePath + Constant.PROTOC_DEPENDENCIES;
         protocDependenciesPaths.add(classesPath);
         final File[] readFiles = new File(filePath).listFiles();
@@ -46,12 +46,12 @@ public class ProtoRead {
         for (String dependenciesPath : protocDependenciesPaths) {
             protoPath.append(Constant.CMD_PROTO_PATH).append(dependenciesPath);
         }
-        FileUtils.mkdir(docPath);
+        FileUtils.mkdir(docJsonPath);
         for (String protobufPath : protobufPaths) {
             final String folderName = protobufPath.replace(classesPath + Constant.SLASH, Constant.EMPTY)
                     .replace(protocDependenciesPath + Constant.SLASH, Constant.EMPTY)
                     .replace(Constant.SLASH, "_");
-            String cmd = (String.format(Constant.CMD_FORMAT, docPath, folderName, protobufPath)) + protoPath;
+            String cmd = (String.format(Constant.CMD_FORMAT, docJsonPath, folderName, protobufPath)) + protoPath;
             Runtime runtime = Runtime.getRuntime();
             Process process = runtime.exec(cmd);
             process.waitFor();
@@ -77,7 +77,7 @@ public class ProtoRead {
         protobufPaths.add(path);
     }
 
-    public String getDocPath() {
-        return docPath;
+    public String getDocJsonPath() {
+        return docJsonPath;
     }
 }

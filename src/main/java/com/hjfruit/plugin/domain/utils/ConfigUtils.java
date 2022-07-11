@@ -15,13 +15,13 @@ import java.util.Properties;
  * @author xianping
  * 2022/7/1018:40
  */
-public class PropertiesUtil {
+public class ConfigUtils {
 
-    private PropertiesUtil() {
+    private ConfigUtils() {
     }
 
-    public static String getProperty(String key) throws IOException {
-        final URL resource = Optional.ofNullable(PropertiesUtil.class.getResource(Constant.PROPERTIES_NAME))
+    public static String propertyValue(String key) throws IOException {
+        final URL resource = Optional.ofNullable(ConfigUtils.class.getResource(Constant.PROPERTIES_NAME))
                 .orElseThrow(() -> new IOException(MessageStr.NOT_FOUND_PROPERTIES.getMessage()));
         try (InputStream inputStream = new BufferedInputStream(new FileInputStream(resource.getPath()))) {
             Properties properties = new Properties();
@@ -30,5 +30,11 @@ public class PropertiesUtil {
         } catch (IOException e) {
             throw new IOException(MessageStr.ERROR_PROPERTIES.getMessage());
         }
+    }
+
+    public static String templatePath() throws IOException {
+        return Optional.ofNullable(ConfigUtils.class.getResource(Constant.TEMPLATE_DIRECTORY))
+                .orElseThrow(() -> new IOException(MessageStr.NOT_FOUND_PROPERTIES.getMessage()))
+                .getPath();
     }
 }

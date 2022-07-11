@@ -5,9 +5,11 @@ import com.hjfruit.plugin.domain.dto.*;
 import com.hjfruit.plugin.domain.dto.conf.DocProperties;
 import com.hjfruit.plugin.domain.dto.conf.DocUpload;
 import com.hjfruit.plugin.domain.enums.MessageStr;
-import com.hjfruit.plugin.domain.utils.StrExpressionUtil;
+import com.hjfruit.plugin.domain.utils.ConfigUtils;
+import com.hjfruit.plugin.domain.utils.StrExpUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,6 +24,8 @@ import java.util.stream.Stream;
  */
 public class ProtoBuild {
 
+    private final String docMdPath;
+
     private final DocProperties docProperties;
 
     private final Map<String, ProtoEnum> enumsMap;
@@ -30,7 +34,8 @@ public class ProtoBuild {
 
     private final Collection<DocUpload> docUploads = new HashSet<>();
 
-    public ProtoBuild(DocProperties properties, ProtoHandle protoHandle) {
+    public ProtoBuild(String filePath, DocProperties properties, ProtoHandle protoHandle) {
+        this.docMdPath = filePath + Constant.DOCS_MD;
         this.docProperties = properties;
         this.messagesMap = protoHandle.getMessagesMap();
         this.enumsMap = protoHandle.getEnumsMap();
@@ -47,14 +52,16 @@ public class ProtoBuild {
     }
 
     private void buildProtobufMd(ProtoModel model) {
-        final String directory = StrExpressionUtil.isNotBlankValue(model.getServiceDescription(), model.getServiceName());
-        final String fileName = StrExpressionUtil.isNotBlankValue(model.getServiceMethod().getDescription(), model.getServiceMethod().getName());
+        final String directory = StrExpUtils.isNotBlankValue(model.getServiceDescription(), model.getServiceName());
+        final String fileName = StrExpUtils.isNotBlankValue(model.getServiceMethod().getDescription(), model.getServiceMethod().getName());
+        FileUtils.mkdir(this.docMdPath + Constant.SLASH + directory);
         // 第五步：创建一个Writer对象，一般创建一FileWriter对象，指定生成的文件名。
-        try (Writer out = new FileWriter(fileName)) {
+        final String filePath = this.docMdPath + Constant.SLASH + directory + Constant.SLASH + fileName;
+        try (Writer out = new FileWriter(filePath)) {
             // 第一步：创建一个Configuration对象，直接new一个对象。构造方法的参数就是FreeMarker对于的版本号。
             Configuration configuration = new Configuration(Configuration.getVersion());
             // 第二步：设置模板文件所在的路径。
-            configuration.setDirectoryForTemplateLoading(new File(Constant.TEMPLATE_DIRECTORY));
+            configuration.setDirectoryForTemplateLoading(new File(ConfigUtils.templatePath()));
             // 第三步：设置模板文件使用的字符集。一般就是utf-8.
             configuration.setDefaultEncoding("utf-8");
             // 第四步：加载一个模板，创建一个模板对象。
@@ -66,8 +73,8 @@ public class ProtoBuild {
             docUpload.setApi_token(docProperties.getApiToken());
             docUpload.setCat_name(directory);
             docUpload.setPage_title(fileName);
-            // TODO 返回json内容
-//        docUpload.setPage_content(content);
+            final String content = FileUtils.fileRead(filePath);
+            docUpload.setPage_content(content);
             docUploads.add(docUpload);
         } catch (Exception e) {
             e.printStackTrace();
