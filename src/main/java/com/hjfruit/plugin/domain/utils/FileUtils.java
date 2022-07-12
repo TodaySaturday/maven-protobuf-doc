@@ -1,5 +1,7 @@
 package com.hjfruit.plugin.domain.utils;
 
+import com.hjfruit.plugin.ProtoDocMojo;
+
 import java.io.*;
 
 /**
@@ -22,8 +24,12 @@ public class FileUtils {
         }
     }
 
-    public static void forceDelete(String file) throws IOException {
-        forceDelete(new File(file));
+    public static void forceDelete(String file) {
+        try {
+            forceDelete(new File(file));
+        } catch (IOException e) {
+            ProtoDocMojo.getLogger().error(e.getMessage());
+        }
     }
 
     public static void forceDelete(File file) throws IOException {

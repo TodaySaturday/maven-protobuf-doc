@@ -2,7 +2,7 @@ package com.hjfruit.plugin.service;
 
 import com.alibaba.fastjson.JSON;
 import com.hjfruit.plugin.ProtoDocMojo;
-import com.hjfruit.plugin.domain.dto.*;
+import com.hjfruit.plugin.domain.dto.handle.*;
 import com.hjfruit.plugin.domain.enums.MessageStr;
 import com.hjfruit.plugin.domain.enums.ProtoProcess;
 import com.hjfruit.plugin.domain.utils.FileUtils;

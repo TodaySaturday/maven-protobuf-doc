@@ -1,4 +1,4 @@
-package com.hjfruit.plugin.domain.dto;
+package com.hjfruit.plugin.domain.dto.handle;
 
 import com.hjfruit.plugin.domain.constant.Constant;
 

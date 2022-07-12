@@ -2,13 +2,18 @@ package com.hjfruit.plugin;
 
 import com.hjfruit.plugin.domain.constant.Constant;
 import com.hjfruit.plugin.domain.dto.conf.DocProperties;
+import com.hjfruit.plugin.domain.dto.conf.DocUpload;
+import com.hjfruit.plugin.domain.dto.http.HttpResp;
 import com.hjfruit.plugin.domain.enums.ProtoProcess;
 import com.hjfruit.plugin.domain.utils.ConfigUtils;
+import com.hjfruit.plugin.domain.utils.FileUtils;
 import com.hjfruit.plugin.service.ProtoBuild;
 import com.hjfruit.plugin.service.ProtoHandle;
 import com.hjfruit.plugin.service.ProtoRead;
 import com.hjfruit.plugin.service.ProtoUpload;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -16,6 +21,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 /**
  * @author xianping
@@ -46,22 +52,44 @@ public class ProtoDocMojo extends AbstractMojo {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws MojoExecutionException, MojoFailureException {
         logger.info(ProtoProcess.PROCESS_START.getProcess());
         try {
             init();
+            if (!httpDebug()) {
+                return;
+            }
             new ProtoRead();
             final ProtoHandle protoHandle = new ProtoHandle();
             final ProtoBuild protoBuild = new ProtoBuild(protoHandle);
             ProtoUpload.upload(protoBuild.getDocUploads());
-//            FileUtils.forceDelete(sourceDirectory.getAbsolutePath() + Constant.DOCS);
         } catch (Exception e) {
             logger.error(e.getMessage());
+        } finally {
+            FileUtils.forceDelete(sourceDirectory.getAbsolutePath() + Constant.DOCS);
         }
         logger.info(ProtoProcess.PROCESS_END.getProcess());
     }
 
-    public void init() throws IOException {
+    private boolean httpDebug() {
+        final DocUpload docUpload = new DocUpload();
+        docUpload.setApi_key(getProperties().getApiKey());
+        docUpload.setApi_token(getProperties().getApiToken());
+        final HttpResp resp;
+        try {
+            resp = ProtoUpload.upload(docUpload);
+        } catch (SocketTimeoutException e) {
+            logger.error(e.getMessage());
+            return false;
+        }
+        if (resp.getErrorCode() != 200 && resp.getErrorCode() != 10101) {
+            logger.error(resp.getErrorMessage());
+            return false;
+        }
+        return true;
+    }
+
+    private void init() throws IOException {
         DocProperties docProperties = new DocProperties();
         docProperties.setPath(sourceDirectory.getAbsolutePath());
         final String formatStr = ConfigUtils.propertyValue(Constant.PROPERTIES_URL_FORMAT);

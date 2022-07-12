@@ -3,13 +3,11 @@ package com.hjfruit.plugin.service;
 import com.alibaba.fastjson.JSON;
 import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.dto.conf.DocUpload;
+import com.hjfruit.plugin.domain.dto.http.HttpResp;
 import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import com.hjfruit.plugin.domain.utils.HttpUtils;
 
-import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.Collection;
 
 /**
@@ -21,17 +19,17 @@ public class ProtoUpload {
     private ProtoUpload() {
     }
 
-    public static void upload(Collection<DocUpload> docUploads) throws IOException {
+    public static void upload(Collection<DocUpload> docUploads) throws SocketTimeoutException {
         for (DocUpload docUpload : docUploads) {
-            ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_UPLOAD.getProcess(), docUpload.getPage_title()));
-            final String jsonParam = JSON.toJSONString(docUpload);
-            OkHttpClient client = new OkHttpClient();
-            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParam);
-            Request request = new Request.Builder()
-                    .post(body)
-                    .url(ProtoDocMojo.getProperties().getApiUrl()).
-                    build();
-            client.newCall(request).execute();
+            upload(docUpload);
         }
+    }
+
+    public static HttpResp upload(DocUpload docUpload) throws SocketTimeoutException {
+        if (null != docUpload.getPage_title()) {
+            ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_UPLOAD.getProcess(), docUpload.getPage_title()));
+        }
+        final String jsonParam = JSON.toJSONString(docUpload);
+        return HttpUtils.doPost(ProtoDocMojo.getProperties().getApiUrl(), jsonParam, HttpResp.class);
     }
 }

@@ -22,6 +22,8 @@ public enum MessageStr {
 
     NOT_FOUND_PROPERTIES("未查找到配置文件"),
 
+    CONNECTION_TIMEOUT("连接超时"),
+
     ;
 
     private final String message;
