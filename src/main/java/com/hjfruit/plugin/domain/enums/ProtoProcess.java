@@ -12,9 +12,9 @@ public enum ProtoProcess {
 
     PROCESS_HANDLE("处理protobuf:%s"),
 
-    PROCESS_BUILD("构建文档……:%s"),
+    PROCESS_BUILD("构建文档:%s"),
 
-    PROCESS_UPLOAD("上传文档……:%s"),
+    PROCESS_UPLOAD("上传文档:%s"),
 
     PROCESS_END("---------------< com.hjfruit.plugin.maven-protobuf-doc:1.0.0-SNAPSHOT END>----------------"),
 

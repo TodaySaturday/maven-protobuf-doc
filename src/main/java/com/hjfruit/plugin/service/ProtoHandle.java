@@ -5,8 +5,7 @@ import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.dto.*;
 import com.hjfruit.plugin.domain.enums.MessageStr;
 import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.Validate;
+import com.hjfruit.plugin.domain.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,10 +28,12 @@ public class ProtoHandle {
 
     private Collection<ProtoService> servicesCollection;
 
-    public ProtoHandle(String docsPath) throws IOException {
-        final File docsFile = new File(docsPath);
+    public ProtoHandle() throws IOException {
+        final File docsFile = new File(ProtoDocMojo.getProperties().getDocJsonPath());
         final File[] listFiles = docsFile.listFiles();
-        Validate.notNull(listFiles, MessageStr.NOT_FOUND_PROTOBUF.getMessage());
+        if (null == listFiles) {
+            throw new IOException(MessageStr.NOT_FOUND_PROTOBUF.getMessage());
+        }
         final List<ProtoFile> protoFiles = new ArrayList<>();
         for (File file : listFiles) {
             ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_HANDLE.getProcess(), file.getAbsolutePath()));

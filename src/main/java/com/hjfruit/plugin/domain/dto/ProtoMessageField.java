@@ -1,5 +1,7 @@
 package com.hjfruit.plugin.domain.dto;
 
+import com.hjfruit.plugin.domain.constant.Constant;
+
 /**
  * @author xianping
  * 2022/7/422:47
@@ -29,6 +31,9 @@ public class ProtoMessageField {
     }
 
     public String getDescription() {
+        if (null == description) {
+            return Constant.EMPTY;
+        }
         return description;
     }
 

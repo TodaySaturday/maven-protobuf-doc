@@ -2,15 +2,13 @@ package com.hjfruit.plugin.service;
 
 import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.constant.Constant;
-import com.hjfruit.plugin.domain.dto.conf.DocProperties;
 import com.hjfruit.plugin.domain.enums.MessageStr;
 import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import org.apache.commons.io.FileUtils;
+import com.hjfruit.plugin.domain.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,23 +18,13 @@ import java.util.Set;
  */
 public class ProtoRead {
 
-    private final String docJsonPath;
-
-    private final String classesPath;
-
-    private final String protocDependenciesPath;
-
     private final Set<String> protobufPaths = new HashSet<>();
 
     private final Set<String> protocDependenciesPaths = new HashSet<>();
 
-    public ProtoRead(DocProperties properties) throws IOException, InterruptedException {
-        final String filePath = properties.getPath();
-        classesPath = filePath + Constant.CLASSES;
-        docJsonPath = filePath + Constant.DOCS_JSON;
-        protocDependenciesPath = filePath + Constant.PROTOC_DEPENDENCIES;
-        protocDependenciesPaths.add(classesPath);
-        final File[] readFiles = new File(filePath).listFiles();
+    public ProtoRead() throws IOException, InterruptedException {
+        protocDependenciesPaths.add(ProtoDocMojo.getProperties().getClassesPath());
+        final File[] readFiles = new File(ProtoDocMojo.getProperties().getPath()).listFiles();
         Optional.ofNullable(readFiles)
                 .ifPresent(this::loadProtobufPaths);
         if (protobufPaths.isEmpty()) {
@@ -50,13 +38,13 @@ public class ProtoRead {
         for (String dependenciesPath : protocDependenciesPaths) {
             protoPath.append(Constant.CMD_PROTO_PATH).append(dependenciesPath);
         }
-        FileUtils.mkdir(docJsonPath);
+        FileUtils.mkdir(ProtoDocMojo.getProperties().getDocJsonPath());
         for (String protobufPath : protobufPaths) {
             ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_READ.getProcess(), protobufPath));
-            final String folderName = protobufPath.replace(classesPath + Constant.SLASH, Constant.EMPTY)
-                    .replace(protocDependenciesPath + Constant.SLASH, Constant.EMPTY)
+            final String folderName = protobufPath.replace(ProtoDocMojo.getProperties().getClassesPath() + Constant.SLASH, Constant.EMPTY)
+                    .replace(ProtoDocMojo.getProperties().getProtocDependenciesPath() + Constant.SLASH, Constant.EMPTY)
                     .replace(Constant.SLASH, "_");
-            String cmd = (String.format(Constant.CMD_FORMAT, docJsonPath, folderName, protobufPath)) + protoPath;
+            String cmd = (String.format(Constant.CMD_FORMAT, ProtoDocMojo.getProperties().getDocJsonPath(), folderName, protobufPath)) + protoPath;
             Runtime runtime = Runtime.getRuntime();
             Process process = runtime.exec(cmd);
             process.waitFor();
@@ -66,7 +54,7 @@ public class ProtoRead {
     private void loadProtobufPaths(File[] files) {
         for (File file : files) {
             if (file.isDirectory()) {
-                loadProtobufPaths(Objects.requireNonNull(file.listFiles()));
+                loadProtobufPaths(file.listFiles());
             }
             if (file.getName().endsWith(Constant.PROTO_SUFFIX)) {
                 addProtobufPaths(file.getParent());
@@ -75,14 +63,10 @@ public class ProtoRead {
     }
 
     private void addProtobufPaths(String path) {
-        if (path.startsWith(protocDependenciesPath)) {
-            final String childPath = path.substring(protocDependenciesPath.length() + 1);
-            protocDependenciesPaths.add(protocDependenciesPath + Constant.SLASH + childPath.substring(0, childPath.indexOf(Constant.SLASH)));
+        if (path.startsWith(ProtoDocMojo.getProperties().getProtocDependenciesPath())) {
+            final String childPath = path.substring(ProtoDocMojo.getProperties().getProtocDependenciesPath().length() + 1);
+            protocDependenciesPaths.add(ProtoDocMojo.getProperties().getProtocDependenciesPath() + Constant.SLASH + childPath.substring(0, childPath.indexOf(Constant.SLASH)));
         }
         protobufPaths.add(path);
-    }
-
-    public String getDocJsonPath() {
-        return docJsonPath;
     }
 }

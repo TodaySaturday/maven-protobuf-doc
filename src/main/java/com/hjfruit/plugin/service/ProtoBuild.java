@@ -3,15 +3,13 @@ package com.hjfruit.plugin.service;
 import com.hjfruit.plugin.ProtoDocMojo;
 import com.hjfruit.plugin.domain.constant.Constant;
 import com.hjfruit.plugin.domain.dto.*;
-import com.hjfruit.plugin.domain.dto.conf.DocProperties;
 import com.hjfruit.plugin.domain.dto.conf.DocUpload;
 import com.hjfruit.plugin.domain.enums.MessageStr;
 import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import com.hjfruit.plugin.domain.utils.ConfigUtils;
+import com.hjfruit.plugin.domain.utils.FileUtils;
 import com.hjfruit.plugin.domain.utils.StrExpUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,19 +24,13 @@ import java.util.stream.Stream;
  */
 public class ProtoBuild {
 
-    private final String docMdPath;
-
-    private final DocProperties docProperties;
-
     private final Map<String, ProtoEnum> enumsMap;
 
     private final Map<String, ProtoMessage> messagesMap;
 
     private final Collection<DocUpload> docUploads = new HashSet<>();
 
-    public ProtoBuild(DocProperties properties, ProtoHandle protoHandle) {
-        this.docMdPath = properties.getPath() + Constant.DOCS_MD;
-        this.docProperties = properties;
+    public ProtoBuild(ProtoHandle protoHandle) {
         this.messagesMap = protoHandle.getMessagesMap();
         this.enumsMap = protoHandle.getEnumsMap();
         protoHandle.getServicesCollection()
@@ -57,23 +49,23 @@ public class ProtoBuild {
         final String directory = StrExpUtils.isNotBlankValue(model.getServiceDescription(), model.getServiceName());
         final String fileName = StrExpUtils.isNotBlankValue(model.getServiceMethod().getDescription(), model.getServiceMethod().getName());
         ProtoDocMojo.getLogger().info(String.format(ProtoProcess.PROCESS_BUILD.getProcess(), fileName));
-        FileUtils.mkdir(this.docMdPath + Constant.SLASH + directory);
+        FileUtils.mkdir(ProtoDocMojo.getProperties().getDocMdPath() + Constant.SLASH + directory);
         // 第五步：创建一个Writer对象，一般创建一FileWriter对象，指定生成的文件名。
-        final String filePath = this.docMdPath + Constant.SLASH + directory + Constant.SLASH + fileName;
+        final String filePath = ProtoDocMojo.getProperties().getDocMdPath() + Constant.SLASH + directory + Constant.SLASH + fileName;
         try (Writer out = new FileWriter(filePath)) {
             // 第一步：创建一个Configuration对象，直接new一个对象。构造方法的参数就是FreeMarker对于的版本号。
-            Configuration configuration = new Configuration(Configuration.getVersion());
+            Configuration configuration = new Configuration(Configuration.VERSION_2_3_31);
             // 第二步：设置模板文件所在的路径。
-            configuration.setDirectoryForTemplateLoading(new File(ConfigUtils.templatePath()));
+            configuration.setDirectoryForTemplateLoading(new File(ProtoDocMojo.getProperties().getDocPath()));
             // 第三步：设置模板文件使用的字符集。一般就是utf-8.
             configuration.setDefaultEncoding("utf-8");
             // 第四步：加载一个模板，创建一个模板对象。
-            Template template = configuration.getTemplate(Constant.TEMPLATE_PATH);
+            Template template = configuration.getTemplate(Constant.TEMPLATE_NAME);
             // 第六步：调用模板对象的process方法输出文件。
             template.process(model, out);
             final DocUpload docUpload = new DocUpload();
-            docUpload.setApi_key(docProperties.getApiKey());
-            docUpload.setApi_token(docProperties.getApiToken());
+            docUpload.setApi_key(ProtoDocMojo.getProperties().getApiKey());
+            docUpload.setApi_token(ProtoDocMojo.getProperties().getApiToken());
             docUpload.setCat_name(directory);
             docUpload.setPage_title(fileName);
             final String content = FileUtils.fileRead(filePath);
@@ -116,7 +108,7 @@ public class ProtoBuild {
     private void loadExtraModel(ProtoModel protoModel, Set<String> types) {
         for (String type : types) {
             final ProtoEnum protoEnum = enumsMap.get(type);
-            if (Objects.nonNull(protoEnum)) {
+            if (null != protoEnum) {
                 protoModel.getExtraEnums().add(protoEnum);
                 continue;
             }

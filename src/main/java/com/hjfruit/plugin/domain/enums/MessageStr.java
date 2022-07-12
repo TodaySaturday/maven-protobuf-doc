@@ -18,9 +18,11 @@ public enum MessageStr {
 
     ERROR_FORMAT("%s格式异常！"),
 
-    ERROR_PROPERTIES("配置加载失败"),
+    ERROR_PROPERTIES("配置加载失败：%s"),
 
     NOT_FOUND_PROPERTIES("未查找到配置文件"),
+
+    NOT_FOUND_TEMPLATE("未查找到模板配置"),
 
     ;
 

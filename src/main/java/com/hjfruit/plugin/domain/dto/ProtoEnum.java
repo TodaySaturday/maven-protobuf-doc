@@ -1,5 +1,7 @@
 package com.hjfruit.plugin.domain.dto;
 
+import com.hjfruit.plugin.domain.constant.Constant;
+
 import java.util.Collection;
 
 /**
@@ -38,6 +40,9 @@ public class ProtoEnum {
     }
 
     public String getDescription() {
+        if (null == description) {
+            return Constant.EMPTY;
+        }
         return description;
     }
 

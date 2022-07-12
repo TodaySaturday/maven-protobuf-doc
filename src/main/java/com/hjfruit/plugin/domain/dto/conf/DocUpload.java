@@ -1,9 +1,5 @@
 package com.hjfruit.plugin.domain.dto.conf;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Objects;
-
 /**
  * @author xianping
  * 2022/6/1622:08
@@ -37,8 +33,8 @@ public class DocUpload {
     }
 
     public String getCat_name() {
-        if (Objects.isNull(this.cat_name)) {
-            return StringUtils.EMPTY;
+        if (null == this.cat_name) {
+            return "";
         }
         return cat_name;
     }

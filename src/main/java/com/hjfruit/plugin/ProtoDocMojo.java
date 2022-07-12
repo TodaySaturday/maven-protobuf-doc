@@ -8,10 +8,7 @@ import com.hjfruit.plugin.service.ProtoBuild;
 import com.hjfruit.plugin.service.ProtoHandle;
 import com.hjfruit.plugin.service.ProtoRead;
 import com.hjfruit.plugin.service.ProtoUpload;
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -42,34 +39,37 @@ public class ProtoDocMojo extends AbstractMojo {
 
     private static Log logger;
 
+    private static DocProperties properties;
+
     public ProtoDocMojo() {
         setLogger(this.getLog());
     }
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() {
         logger.info(ProtoProcess.PROCESS_START.getProcess());
         try {
-            final DocProperties properties = properties(sourceDirectory.getAbsolutePath());
-            final ProtoRead protoRead = new ProtoRead(properties);
-            final ProtoHandle protoHandle = new ProtoHandle(protoRead.getDocJsonPath());
-            final ProtoBuild protoBuild = new ProtoBuild(properties, protoHandle);
-            ProtoUpload.upload(properties, protoBuild.getDocUploads());
-            FileUtils.fileDelete(sourceDirectory.getAbsolutePath() + Constant.DOCS);
-        } catch (IOException | InterruptedException e) {
+            init();
+            new ProtoRead();
+            final ProtoHandle protoHandle = new ProtoHandle();
+            final ProtoBuild protoBuild = new ProtoBuild(protoHandle);
+            ProtoUpload.upload(protoBuild.getDocUploads());
+//            FileUtils.forceDelete(sourceDirectory.getAbsolutePath() + Constant.DOCS);
+        } catch (Exception e) {
             logger.error(e.getMessage());
         }
         logger.info(ProtoProcess.PROCESS_END.getProcess());
     }
 
-    private DocProperties properties(String path) throws IOException {
+    public void init() throws IOException {
+        DocProperties docProperties = new DocProperties();
+        docProperties.setPath(sourceDirectory.getAbsolutePath());
         final String formatStr = ConfigUtils.propertyValue(Constant.PROPERTIES_URL_FORMAT);
-        DocProperties properties = new DocProperties();
-        properties.setPath(path);
-        properties.setApiUrl(String.format(formatStr, apiHost));
-        properties.setApiKey(apiKey);
-        properties.setApiToken(apiToken);
-        return properties;
+        docProperties.setApiUrl(String.format(formatStr, apiHost));
+        docProperties.setApiKey(apiKey);
+        docProperties.setApiToken(apiToken);
+        setProperties(docProperties);
+
     }
 
     public static Log getLogger() {
@@ -78,5 +78,13 @@ public class ProtoDocMojo extends AbstractMojo {
 
     public static void setLogger(Log logger) {
         ProtoDocMojo.logger = logger;
+    }
+
+    public static DocProperties getProperties() {
+        return properties;
+    }
+
+    public static void setProperties(DocProperties properties) {
+        ProtoDocMojo.properties = properties;
     }
 }

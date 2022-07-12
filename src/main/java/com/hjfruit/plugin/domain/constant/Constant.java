@@ -1,5 +1,7 @@
 package com.hjfruit.plugin.domain.constant;
 
+import java.io.File;
+
 /**
  * @author xianping
  * 2022/6/1117:20
@@ -9,7 +11,7 @@ public abstract class Constant {
     private Constant() {
     }
 
-    public static final String SLASH = "\\";
+    public static final String SLASH = File.separator;
 
     public static final String EMPTY = "";
 
@@ -25,13 +27,15 @@ public abstract class Constant {
 
     public static final String EXCLUDE_SERVICE_PACKAGE = "google.longrunning";
 
+    public static final String EXCLUDE_MESSAGE_PROTO = "google.protobuf.Any";
+
     public static final String CMD_PROTO_PATH = " --proto_path=";
 
     public static final String CMD_FORMAT = "protoc --doc_out=%s --doc_opt=json,%s.json %s\\*.proto";
 
-    public static final String TEMPLATE_DIRECTORY = "/template";
+    public static final String TEMPLATE_NAME = "protobuf.ftl";
 
-    public static final String TEMPLATE_PATH = "protobuf.ftl";
+    public static final String TEMPLATE_DIRECTORY = "/template/" + TEMPLATE_NAME;
 
     public static final String PROPERTIES_NAME = "/config/showdoc.properties";
 

@@ -1,5 +1,7 @@
 package com.hjfruit.plugin.domain.dto;
 
+import com.hjfruit.plugin.domain.constant.Constant;
+
 import java.util.Collection;
 
 /**
@@ -42,6 +44,9 @@ public class ProtoMessage {
     }
 
     public String getDescription() {
+        if (Constant.EXCLUDE_MESSAGE_PROTO.equals(this.fullName) || null == description) {
+            return Constant.EMPTY;
+        }
         return description;
     }
 

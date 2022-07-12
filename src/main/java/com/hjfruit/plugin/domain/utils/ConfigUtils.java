@@ -4,11 +4,9 @@ import com.hjfruit.plugin.domain.constant.Constant;
 import com.hjfruit.plugin.domain.enums.MessageStr;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Optional;
 import java.util.Properties;
 
 /**
@@ -21,20 +19,16 @@ public class ConfigUtils {
     }
 
     public static String propertyValue(String key) throws IOException {
-        final URL resource = Optional.ofNullable(ConfigUtils.class.getResource(Constant.PROPERTIES_NAME))
-                .orElseThrow(() -> new IOException(MessageStr.NOT_FOUND_PROPERTIES.getMessage()));
-        try (InputStream inputStream = new BufferedInputStream(new FileInputStream(resource.getPath()))) {
+        final URL url = ConfigUtils.class.getResource(Constant.PROPERTIES_NAME);
+        if (null == url) {
+            throw new IOException(MessageStr.NOT_FOUND_PROPERTIES.getMessage());
+        }
+        try (InputStream inputStream = new BufferedInputStream(url.openStream())) {
             Properties properties = new Properties();
             properties.load(inputStream);
             return properties.getProperty(key);
         } catch (IOException e) {
-            throw new IOException(MessageStr.ERROR_PROPERTIES.getMessage());
+            throw new IOException(String.format(MessageStr.ERROR_PROPERTIES.getMessage(), e.getMessage()));
         }
-    }
-
-    public static String templatePath() throws IOException {
-        return Optional.ofNullable(ConfigUtils.class.getResource(Constant.TEMPLATE_DIRECTORY))
-                .orElseThrow(() -> new IOException(MessageStr.NOT_FOUND_PROPERTIES.getMessage()))
-                .getPath();
     }
 }
