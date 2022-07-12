@@ -12,8 +12,6 @@ import com.hjfruit.plugin.service.ProtoHandle;
 import com.hjfruit.plugin.service.ProtoRead;
 import com.hjfruit.plugin.service.ProtoUpload;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -52,7 +50,7 @@ public class ProtoDocMojo extends AbstractMojo {
     }
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() {
         logger.info(ProtoProcess.PROCESS_START.getProcess());
         try {
             init();
