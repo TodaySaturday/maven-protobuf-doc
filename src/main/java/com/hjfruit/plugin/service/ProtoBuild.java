@@ -60,7 +60,7 @@ public class ProtoBuild {
             // 第三步：设置模板文件使用的字符集。一般就是utf-8.
             configuration.setDefaultEncoding("utf-8");
             // 第四步：加载一个模板，创建一个模板对象。
-            Template template = configuration.getTemplate(Constant.TEMPLATE_NAME);
+            Template template = configuration.getTemplate(Constant.TEMPLATE_FILE_NAME);
             // 第六步：调用模板对象的process方法输出文件。
             template.process(model, out);
             final DocUpload docUpload = new DocUpload();

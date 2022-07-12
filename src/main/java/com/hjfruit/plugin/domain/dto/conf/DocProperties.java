@@ -26,6 +26,10 @@ public class DocProperties {
 
     private String protocDependenciesPath;
 
+    private String protocFilePath;
+
+    private String protocGenDocFilePath;
+
     private String apiUrl;
 
     private String apiKey;
@@ -49,6 +53,9 @@ public class DocProperties {
         this.protocDependenciesPath = path + Constant.PROTOC_DEPENDENCIES;
         // 模板目录
         this.setTemplateDirectory();
+        // proto执行文件
+        this.setProtocFilePath();
+        this.setProtocGenDocFilePath();
     }
 
     public void setApiUrl(String apiUrl) {
@@ -88,14 +95,38 @@ public class DocProperties {
     }
 
     private void setTemplateDirectory() throws IOException {
-        final InputStream inputStream = DocProperties.class.getResourceAsStream(Constant.TEMPLATE_DIRECTORY);
-        if (null == inputStream) {
-            throw new IOException(MessageStr.NOT_FOUND_TEMPLATE.getMessage());
-        }
-        FileUtils.copyInputStreamToFile(inputStream, new File(this.docPath + File.separator + Constant.TEMPLATE_NAME));
+        copyPropertyFile(Constant.TEMPLATE_DIRECTORY, Constant.TEMPLATE_FILE_NAME);
     }
 
     public String getDocPath() {
         return docPath;
+    }
+
+    public String getProtocFilePath() {
+        return protocFilePath;
+    }
+
+    private void setProtocFilePath() throws IOException {
+        final String filePath = Constant.PLUGIN_DIRECTORY + Constant.PROTOC_FILE_NAME;
+        copyPropertyFile(filePath, Constant.PROTOC_FILE_NAME);
+        this.protocFilePath = docPath + File.separator + Constant.PROTOC_FILE_NAME;
+    }
+
+    public String getProtocGenDocFilePath() {
+        return protocGenDocFilePath;
+    }
+
+    private void setProtocGenDocFilePath() throws IOException {
+        final String filePath = Constant.PLUGIN_DIRECTORY + Constant.PROTOC_GEN_DOC_FILE_NAME;
+        copyPropertyFile(filePath, Constant.PROTOC_GEN_DOC_FILE_NAME);
+        this.protocGenDocFilePath = docPath + File.separator + Constant.PROTOC_GEN_DOC_FILE_NAME;
+    }
+
+    private void copyPropertyFile(String filePath, String fileName) throws IOException {
+        final InputStream inputStream = DocProperties.class.getResourceAsStream(filePath);
+        if (null == inputStream) {
+            throw new IOException(String.format(MessageStr.ERROR_PROPERTIES.getMessage(), filePath));
+        }
+        FileUtils.copyInputStreamToFile(inputStream, new File(this.docPath + File.separator + fileName));
     }
 }

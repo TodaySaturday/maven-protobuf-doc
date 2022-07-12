@@ -22,8 +22,6 @@ public enum MessageStr {
 
     NOT_FOUND_PROPERTIES("未查找到配置文件"),
 
-    NOT_FOUND_TEMPLATE("未查找到模板配置"),
-
     ;
 
     private final String message;

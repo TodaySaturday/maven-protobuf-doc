@@ -44,7 +44,8 @@ public class ProtoRead {
             final String folderName = protobufPath.replace(ProtoDocMojo.getProperties().getClassesPath() + Constant.SLASH, Constant.EMPTY)
                     .replace(ProtoDocMojo.getProperties().getProtocDependenciesPath() + Constant.SLASH, Constant.EMPTY)
                     .replace(Constant.SLASH, "_");
-            String cmd = (String.format(Constant.CMD_FORMAT, ProtoDocMojo.getProperties().getDocJsonPath(), folderName, protobufPath)) + protoPath;
+            String cmd = (String.format(Constant.CMD_FORMAT, ProtoDocMojo.getProperties().getProtocFilePath(),ProtoDocMojo.getProperties().getProtocGenDocFilePath(),ProtoDocMojo.getProperties().getDocJsonPath(), folderName, protobufPath)) + protoPath;
+            ProtoDocMojo.getLogger().info(cmd);
             Runtime runtime = Runtime.getRuntime();
             Process process = runtime.exec(cmd);
             process.waitFor();
