@@ -16,6 +16,8 @@ public enum ProtoProcess {
 
     PROCESS_UPLOAD("上传文档:%s"),
 
+    PROCESS_README("构建版本变更记录"),
+
     PROCESS_END("---------------< com.hjfruit.plugin.maven-protobuf-doc:1.0.0-SNAPSHOT END>----------------"),
 
     ;

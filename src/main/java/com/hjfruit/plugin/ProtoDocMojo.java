@@ -7,10 +7,7 @@ import com.hjfruit.plugin.domain.dto.http.HttpResp;
 import com.hjfruit.plugin.domain.enums.ProtoProcess;
 import com.hjfruit.plugin.domain.utils.ConfigUtils;
 import com.hjfruit.plugin.domain.utils.FileUtils;
-import com.hjfruit.plugin.service.ProtoBuild;
-import com.hjfruit.plugin.service.ProtoHandle;
-import com.hjfruit.plugin.service.ProtoRead;
-import com.hjfruit.plugin.service.ProtoUpload;
+import com.hjfruit.plugin.service.*;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -34,8 +31,10 @@ public class ProtoDocMojo extends AbstractMojo {
     private String apiKey;
 
     @Parameter(required = true)
-
     private String apiToken;
+
+    @Parameter
+    private String readmePath;
 
     @Parameter(defaultValue = "${project.build.directory}")
     private File sourceDirectory;
@@ -60,6 +59,7 @@ public class ProtoDocMojo extends AbstractMojo {
             final ProtoHandle protoHandle = new ProtoHandle();
             final ProtoBuild protoBuild = new ProtoBuild(protoHandle);
             ProtoUpload.upload(protoBuild.getDocUploads());
+            ProtoReadme.protoReadme();
         } catch (Exception e) {
             logger.error(e.getMessage());
         } finally {
@@ -91,6 +91,7 @@ public class ProtoDocMojo extends AbstractMojo {
         docProperties.setPath(sourceDirectory.getAbsolutePath());
         final String formatStr = ConfigUtils.propertyValue(Constant.PROPERTIES_URL_FORMAT);
         docProperties.setApiUrl(String.format(formatStr, apiHost));
+        docProperties.setReadmePath(readmePath);
         docProperties.setApiKey(apiKey);
         docProperties.setApiToken(apiToken);
         setProperties(docProperties);

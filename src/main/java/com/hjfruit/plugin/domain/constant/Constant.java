@@ -31,6 +31,8 @@ public abstract class Constant {
 
     public static final String EXCLUDE_MESSAGE_PROTO = "google.protobuf.Any";
 
+    public static final String VERSION_README = "版本变更记录";
+
     public static final String CMD_PROTO_PATH = " --proto_path=";
 
     public static final String CMD_FORMAT = "%s --plugin=protoc-gen-doc=%s --doc_out=%s --doc_opt=json,%s.json %s\\*.proto";
