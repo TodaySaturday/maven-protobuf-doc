@@ -26,7 +26,7 @@ public class ProtoEnumValue {
     }
 
     public String getDescription() {
-        return description;
+        return description.replace("\n", " ");
     }
 
     public void setDescription(String description) {

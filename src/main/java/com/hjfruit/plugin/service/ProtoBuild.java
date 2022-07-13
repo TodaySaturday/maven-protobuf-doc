@@ -112,14 +112,15 @@ public class ProtoBuild {
                 continue;
             }
             final ProtoMessage protoMessage = messagesMap.get(type);
-            protoModel.getExtraMessages().add(protoMessage);
-            final Set<String> typeSet = protoMessage.getFields()
-                    .stream()
-                    .filter(ProtoMessageField::customMessage)
-                    .map(ProtoMessageField::getFullType)
-                    .collect(Collectors.toSet());
-            if (!typeSet.isEmpty()) {
-                loadExtraModel(protoModel, typeSet);
+            if (protoModel.getExtraMessages().add(protoMessage)) {
+                final Set<String> typeSet = protoMessage.getFields()
+                        .stream()
+                        .filter(ProtoMessageField::customMessage)
+                        .map(ProtoMessageField::getFullType)
+                        .collect(Collectors.toSet());
+                if (!typeSet.isEmpty()) {
+                    loadExtraModel(protoModel, typeSet);
+                }
             }
         }
     }
