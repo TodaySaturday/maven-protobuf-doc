@@ -3,6 +3,7 @@ package com.hjfruit.plugin.domain.utils;
 import com.hjfruit.plugin.ProtoDocMojo;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author xianping
@@ -77,11 +78,11 @@ public class FileUtils {
 
     public static String fileRead(String fileName) throws IOException {
         StringBuilder builder = new StringBuilder();
-        try (FileInputStream in = new FileInputStream(fileName)) {
-            byte[] b = new byte[512];
+        try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8)) {
+            char[] chars = new char[515];
             int count;
-            while ((count = in.read(b)) > 0) {
-                builder.append(new String(b, 0, count));
+            while ((count = inputStreamReader.read(chars)) > 0) {
+                builder.append(new String(chars, 0, count));
             }
             return builder.toString();
         } catch (IOException e) {

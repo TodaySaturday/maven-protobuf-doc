@@ -11,9 +11,8 @@ import com.hjfruit.plugin.domain.utils.StrExpUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,7 +51,7 @@ public class ProtoBuild {
         FileUtils.mkdir(ProtoDocMojo.getProperties().getDocMdPath() + Constant.SLASH + directory);
         // 第五步：创建一个Writer对象，一般创建一FileWriter对象，指定生成的文件名。
         final String filePath = ProtoDocMojo.getProperties().getDocMdPath() + Constant.SLASH + directory + Constant.SLASH + fileName;
-        try (Writer out = new FileWriter(filePath)) {
+        try (Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath, true), StandardCharsets.UTF_8))) {
             // 第一步：创建一个Configuration对象，直接new一个对象。构造方法的参数就是FreeMarker对于的版本号。
             Configuration configuration = new Configuration(Configuration.VERSION_2_3_31);
             // 第二步：设置模板文件所在的路径。
