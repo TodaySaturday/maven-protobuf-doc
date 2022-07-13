@@ -13,7 +13,6 @@ import com.hjfruit.plugin.service.ProtoRead;
 import com.hjfruit.plugin.service.ProtoUpload;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
@@ -25,7 +24,7 @@ import java.net.SocketTimeoutException;
  * @author xianping
  * 2022/7/1019:02
  */
-@Mojo(name = "protobuf-doc", defaultPhase = LifecyclePhase.COMPILE)
+@Mojo(name = "protobuf-doc")
 public class ProtoDocMojo extends AbstractMojo {
 
     @Parameter(required = true)

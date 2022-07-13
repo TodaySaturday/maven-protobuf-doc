@@ -1,7 +1,5 @@
 package com.hjfruit.plugin.domain.dto.handle;
 
-import com.hjfruit.plugin.domain.constant.Constant;
-
 import java.util.Collection;
 
 /**
@@ -40,9 +38,6 @@ public class ProtoService {
     }
 
     public String getDescription() {
-        if (null == description) {
-            return Constant.EMPTY;
-        }
         return description;
     }
 

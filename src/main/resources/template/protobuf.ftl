@@ -16,7 +16,7 @@
 | :------: | :------: | :------: | :------: |
 <#if (request.fields?size>0)>
 <#list request.fields as field>
-|    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     ${field.description}     |
+|    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     <#if field.description==''||request.fullName=='google.protobuf.Any'>${'<span></span>'}<#else>${field.description}</#if>     |
 </#list>
 </#if>
 
@@ -28,7 +28,7 @@
 | :------: | :------: | :------: | :------: |
 <#if (request.fields?size>0)>
 <#list response.fields as field>
-|    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     ${field.description}     |
+|    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     <#if field.description==''||response.fullName=='google.protobuf.Any'>${'<span></span>'}<#else>${field.description}</#if>     |
 </#list>
 </#if>
 
@@ -41,14 +41,14 @@
 <#list extraMessages as message>
 ###### ${'[${message.fullName}](#${message.fullName})'}
 
-<#if (message.description??)&&(message.description!="")>
+<#if message.fullName!='google.protobuf.Any'&&(message.description??)&&(message.description!="")>
 - 描述： ${message.description}
 </#if>
 
 | 参数名称 | 参数类型 | 参数标签 | 参数说明 |
 | :------: | :------: | :------: | :------: |
 <#list message.fields as field>
-|    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     ${field.description}     |
+|    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     <#if field.description==''||message.fullName=='google.protobuf.Any'>${'<span></span>'}<#else>${field.description}</#if>     |
 </#list>
 </#list>
 
@@ -66,7 +66,7 @@
 | 参数名称 | 参数下标 | 参数说明 |
 | :------: | :------: | :------: |
 <#list enum.values as value>
-|    ${value.name}      |   ${value.number}   |     ${value.description}     |
+|    ${value.name}      |   ${value.number}   |     <#if value.description==''>${'<span></span>'}<#else>${value.description}</#if>     |
 </#list>
 </#list>
 

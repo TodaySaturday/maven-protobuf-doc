@@ -98,9 +98,6 @@ public class ProtoServiceMethod {
     }
 
     public String getDescription() {
-        if (null == description) {
-            return Constant.EMPTY;
-        }
         //正则表达式
         String regEx = "[\n`~!@#$%^&*()+=\\-_|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。， 、？]";
         Pattern pattern = Pattern.compile(regEx);
