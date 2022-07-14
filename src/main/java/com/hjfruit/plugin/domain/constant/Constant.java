@@ -27,7 +27,9 @@ public abstract class Constant {
 
     public static final String EXCLUDE_SERVICE_PACKAGE = "google.longrunning";
 
-    public static final String VERSION_README = "版本变更记录";
+    public static final String VERSION_README_NAME = "README";
+
+    public static final String VERSION_README_DIRECTORY = "版本变更记录";
 
     public static final String CMD_PROTO_PATH = " --proto_path=";
 

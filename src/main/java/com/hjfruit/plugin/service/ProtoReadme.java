@@ -23,7 +23,8 @@ public class ProtoReadme {
             ProtoDocMojo.getLogger().info(ProtoProcess.PROCESS_README.getProcess());
             final String readmeContent = FileUtils.fileRead(readmePath.getAbsolutePath());
             final DocUpload docUpload = new DocUpload();
-            docUpload.setPage_title(Constant.VERSION_README);
+            docUpload.setPage_title(Constant.VERSION_README_NAME);
+            docUpload.setCat_name(Constant.VERSION_README_DIRECTORY);
             docUpload.setPage_content(readmeContent);
             docUpload.setApi_key(ProtoDocMojo.getProperties().getApiKey());
             docUpload.setApi_token(ProtoDocMojo.getProperties().getApiToken());
