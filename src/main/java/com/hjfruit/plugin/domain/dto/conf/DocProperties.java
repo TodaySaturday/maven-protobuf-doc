@@ -30,8 +30,6 @@ public class DocProperties {
 
     private String protocGenDocFilePath;
 
-    private String readmePath;
-
     private String apiUrl;
 
     private String apiKey;
@@ -130,13 +128,5 @@ public class DocProperties {
             throw new IOException(String.format(MessageStr.ERROR_PROPERTIES.getMessage(), filePath));
         }
         FileUtils.copyInputStreamToFile(inputStream, new File(this.docPath + File.separator + fileName));
-    }
-
-    public String getReadmePath() {
-        return readmePath;
-    }
-
-    public void setReadmePath(String readmePath) {
-        this.readmePath = readmePath;
     }
 }

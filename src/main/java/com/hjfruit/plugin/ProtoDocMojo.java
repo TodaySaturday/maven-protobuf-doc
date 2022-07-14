@@ -24,19 +24,31 @@ import java.net.SocketTimeoutException;
 @Mojo(name = "protobuf-doc")
 public class ProtoDocMojo extends AbstractMojo {
 
+    /**
+     * showdoc服务地址
+     */
     @Parameter(required = true)
     private String apiHost;
 
+    /**
+     * 项目对应apiKey
+     */
     @Parameter(required = true)
     private String apiKey;
 
+    /**
+     * 项目对应apiToken
+     */
     @Parameter(required = true)
     private String apiToken;
 
+    /**
+     * 项目README文件路径，非必填，填写则会上传README文件作为项目版本变更记录
+     */
     @Parameter
-    private String readmePath;
+    private File readmePath;
 
-    @Parameter(defaultValue = "${project.build.directory}")
+    @Parameter(defaultValue = "${project.build.directory}", readonly = true)
     private File sourceDirectory;
 
     private static Log logger;
@@ -59,7 +71,7 @@ public class ProtoDocMojo extends AbstractMojo {
             final ProtoHandle protoHandle = new ProtoHandle();
             final ProtoBuild protoBuild = new ProtoBuild(protoHandle);
             ProtoUpload.upload(protoBuild.getDocUploads());
-            ProtoReadme.protoReadme();
+            ProtoReadme.protoReadme(readmePath);
         } catch (Exception e) {
             logger.error(e.getMessage());
         } finally {
@@ -91,7 +103,6 @@ public class ProtoDocMojo extends AbstractMojo {
         docProperties.setPath(sourceDirectory.getAbsolutePath());
         final String formatStr = ConfigUtils.propertyValue(Constant.PROPERTIES_URL_FORMAT);
         docProperties.setApiUrl(String.format(formatStr, apiHost));
-        docProperties.setReadmePath(readmePath);
         docProperties.setApiKey(apiKey);
         docProperties.setApiToken(apiToken);
         setProperties(docProperties);

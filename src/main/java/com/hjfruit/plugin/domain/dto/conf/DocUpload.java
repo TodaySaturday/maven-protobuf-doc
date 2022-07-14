@@ -33,9 +33,6 @@ public class DocUpload {
     }
 
     public String getCat_name() {
-        if (null == this.cat_name) {
-            return "";
-        }
         return cat_name;
     }
 

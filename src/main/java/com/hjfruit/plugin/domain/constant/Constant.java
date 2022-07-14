@@ -15,8 +15,6 @@ public abstract class Constant {
 
     public static final String EMPTY = "";
 
-    public static final String EMPTY_PLACEHOLDER = "<span></span>";
-
     public static final String DOCS = SLASH + "docs";
 
     public static final String DOCS_JSON = DOCS + SLASH + "json";
@@ -29,13 +27,11 @@ public abstract class Constant {
 
     public static final String EXCLUDE_SERVICE_PACKAGE = "google.longrunning";
 
-    public static final String EXCLUDE_MESSAGE_PROTO = "google.protobuf.Any";
-
     public static final String VERSION_README = "版本变更记录";
 
     public static final String CMD_PROTO_PATH = " --proto_path=";
 
-    public static final String CMD_FORMAT = "%s --plugin=protoc-gen-doc=%s --doc_out=%s --doc_opt=json,%s.json %s\\*.proto";
+    public static final String CMD_FORMAT = "%s --plugin=protoc-gen-doc=%s --doc_out=%s --doc_opt=json,%s.json %s" + SLASH + "*.proto";
 
     public static final String PLUGIN_DIRECTORY = "/plugin/";
 
