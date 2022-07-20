@@ -26,7 +26,7 @@
 
 | 参数名称 | 参数类型 | 参数标签 | 参数说明 |
 | :------: | :------: | :------: | :------: |
-<#if (request.fields?size>0)>
+<#if (response.fields?size>0)>
 <#list response.fields as field>
 |    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     <#if field.description==''||response.fullName=='google.protobuf.Any'>${'<span></span>'}<#else>${field.description}</#if>     |
 </#list>
