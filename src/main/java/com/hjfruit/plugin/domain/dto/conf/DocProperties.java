@@ -129,11 +129,18 @@ public class DocProperties {
         if (null == inputStream) {
             throw new IOException(String.format(MessageStr.ERROR_PROPERTIES.getMessage(), filePath));
         }
-        FileUtils.copyInputStreamToFile(inputStream, new File(this.docPath + File.separator + fileName));
+        final File file = new File(this.docPath + File.separator + fileName);
+        // linux需要配置文件权限
+        if (getSystem().contains("Linux")) {
+            file.setExecutable(true);
+            file.setReadable(true);
+            file.setWritable(true);
+        }
+        FileUtils.copyInputStreamToFile(inputStream, file);
     }
 
     private String getPluginName(String pluginName) throws IOException {
-        final String osName = System.getProperty("os.name");
+        final String osName = getSystem();
         final Map<String, Map<String, String>> pluginsMap = new HashMap<>();
         final HashMap<String, String> windowsPluginMap = new HashMap<>();
         windowsPluginMap.put(Constant.PROTOC, "protoc-3.19.3-windows-x86_64.exe");
@@ -150,5 +157,9 @@ public class DocProperties {
                 .orElseThrow(() -> new IOException(String.format(MessageStr.NONSUPPORT_SYSTEM.getMessage(), osName)));
         final Map<String, String> pluginMap = pluginsMap.get(systemKey);
         return pluginMap.get(pluginName);
+    }
+
+    private String getSystem() {
+        return System.getProperty("os.name");
     }
 }
