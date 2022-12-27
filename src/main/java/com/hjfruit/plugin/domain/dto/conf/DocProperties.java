@@ -46,7 +46,7 @@ public class DocProperties {
         return path;
     }
 
-    public void setPath(String path) throws IOException {
+    public void setPath(String path) throws IOException, InterruptedException {
         this.path = path;
         this.classesPath = path + Constant.CLASSES;
         this.docPath = path + Constant.DOCS;
@@ -108,27 +108,33 @@ public class DocProperties {
         return protocFilePath;
     }
 
-    private void setProtocFilePath() throws IOException {
+    private void setProtocFilePath() throws IOException, InterruptedException {
         final String filePath = Constant.PLUGIN_DIRECTORY + getPluginName(Constant.PROTOC);
-        final String path = copyPropertyFile(filePath, getPluginName(Constant.PROTOC));
+        final String pluginPath = copyPropertyFile(filePath, getPluginName(Constant.PROTOC));
         this.protocFilePath = docPath + File.separator + getPluginName(Constant.PROTOC);
-        if (getSystem().contains(Constant.LINUX)) {
-            final Runtime runtime = Runtime.getRuntime();
-            String command = "chmod 770 " + path;
-            Process process = runtime.exec(command);
-            process.waitFor();
-            process.exitValue();
+        settingPermission(pluginPath);
+    }
+
+    private void settingPermission(String pluginPath) throws IOException, InterruptedException {
+        if (!getSystem().contains(Constant.LINUX)) {
+            return;
         }
+        final Runtime runtime = Runtime.getRuntime();
+        String command = "chmod 770 " + pluginPath;
+        Process process = runtime.exec(command);
+        process.waitFor();
+        process.exitValue();
     }
 
     public String getProtocGenDocFilePath() {
         return protocGenDocFilePath;
     }
 
-    private void setProtocGenDocFilePath() throws IOException {
+    private void setProtocGenDocFilePath() throws IOException, InterruptedException {
         final String filePath = Constant.PLUGIN_DIRECTORY + getPluginName(Constant.PROTOC_GEN_DOC);
-        copyPropertyFile(filePath, getPluginName(Constant.PROTOC_GEN_DOC));
+        final String pluginPath = copyPropertyFile(filePath, getPluginName(Constant.PROTOC_GEN_DOC));
         this.protocGenDocFilePath = docPath + File.separator + getPluginName(Constant.PROTOC_GEN_DOC);
+        settingPermission(pluginPath);
     }
 
     private String copyPropertyFile(String filePath, String fileName) throws IOException {

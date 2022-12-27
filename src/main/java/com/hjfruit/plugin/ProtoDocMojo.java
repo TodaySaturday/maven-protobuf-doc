@@ -98,7 +98,7 @@ public class ProtoDocMojo extends AbstractMojo {
         return true;
     }
 
-    private void init() throws IOException {
+    private void init() throws IOException, InterruptedException {
         DocProperties docProperties = new DocProperties();
         docProperties.setPath(sourceDirectory.getAbsolutePath());
         final String formatStr = ConfigUtils.propertyValue(Constant.PROPERTIES_URL_FORMAT);
