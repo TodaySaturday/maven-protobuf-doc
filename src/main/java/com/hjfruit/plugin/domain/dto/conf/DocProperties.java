@@ -145,7 +145,7 @@ public class DocProperties {
         pluginsMap.put("Linux", linuxPluginMap);
         final String systemKey = pluginsMap.keySet()
                 .stream()
-                .filter(key -> key.contains(osName))
+                .filter(osName::contains)
                 .findFirst()
                 .orElseThrow(() -> new IOException(String.format(MessageStr.NONSUPPORT_SYSTEM.getMessage(), osName)));
         final Map<String, String> pluginMap = pluginsMap.get(systemKey);
