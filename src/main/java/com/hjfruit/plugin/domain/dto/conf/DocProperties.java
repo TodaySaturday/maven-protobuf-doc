@@ -110,8 +110,15 @@ public class DocProperties {
 
     private void setProtocFilePath() throws IOException {
         final String filePath = Constant.PLUGIN_DIRECTORY + getPluginName(Constant.PROTOC);
-        copyPropertyFile(filePath, getPluginName(Constant.PROTOC));
+        final String path = copyPropertyFile(filePath, getPluginName(Constant.PROTOC));
         this.protocFilePath = docPath + File.separator + getPluginName(Constant.PROTOC);
+        if (getSystem().contains(Constant.LINUX)) {
+            final Runtime runtime = Runtime.getRuntime();
+            String command = "chmod 770 " + path;
+            Process process = runtime.exec(command);
+            process.waitFor();
+            process.exitValue();
+        }
     }
 
     public String getProtocGenDocFilePath() {
@@ -124,19 +131,14 @@ public class DocProperties {
         this.protocGenDocFilePath = docPath + File.separator + getPluginName(Constant.PROTOC_GEN_DOC);
     }
 
-    private void copyPropertyFile(String filePath, String fileName) throws IOException {
+    private String copyPropertyFile(String filePath, String fileName) throws IOException {
         final InputStream inputStream = DocProperties.class.getResourceAsStream(filePath);
         if (null == inputStream) {
             throw new IOException(String.format(MessageStr.ERROR_PROPERTIES.getMessage(), filePath));
         }
         final File file = new File(this.docPath + File.separator + fileName);
-        // linux需要配置文件权限
-        if (getSystem().contains(Constant.LINUX)) {
-            file.setExecutable(true);
-            file.setReadable(true);
-            file.setWritable(true);
-        }
         FileUtils.copyInputStreamToFile(inputStream, file);
+        return file.getAbsolutePath();
     }
 
     private String getPluginName(String pluginName) throws IOException {
