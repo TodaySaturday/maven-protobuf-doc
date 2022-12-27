@@ -7,6 +7,8 @@ import com.hjfruit.plugin.domain.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author xianping
@@ -107,9 +109,9 @@ public class DocProperties {
     }
 
     private void setProtocFilePath() throws IOException {
-        final String filePath = Constant.PLUGIN_DIRECTORY + Constant.PROTOC_FILE_NAME;
-        copyPropertyFile(filePath, Constant.PROTOC_FILE_NAME);
-        this.protocFilePath = docPath + File.separator + Constant.PROTOC_FILE_NAME;
+        final String filePath = Constant.PLUGIN_DIRECTORY + getPluginName(Constant.PROTOC);
+        copyPropertyFile(filePath, getPluginName(Constant.PROTOC));
+        this.protocFilePath = docPath + File.separator + getPluginName(Constant.PROTOC);
     }
 
     public String getProtocGenDocFilePath() {
@@ -117,9 +119,9 @@ public class DocProperties {
     }
 
     private void setProtocGenDocFilePath() throws IOException {
-        final String filePath = Constant.PLUGIN_DIRECTORY + Constant.PROTOC_GEN_DOC_FILE_NAME;
-        copyPropertyFile(filePath, Constant.PROTOC_GEN_DOC_FILE_NAME);
-        this.protocGenDocFilePath = docPath + File.separator + Constant.PROTOC_GEN_DOC_FILE_NAME;
+        final String filePath = Constant.PLUGIN_DIRECTORY + getPluginName(Constant.PROTOC_GEN_DOC);
+        copyPropertyFile(filePath, getPluginName(Constant.PROTOC_GEN_DOC));
+        this.protocGenDocFilePath = docPath + File.separator + getPluginName(Constant.PROTOC_GEN_DOC);
     }
 
     private void copyPropertyFile(String filePath, String fileName) throws IOException {
@@ -128,5 +130,25 @@ public class DocProperties {
             throw new IOException(String.format(MessageStr.ERROR_PROPERTIES.getMessage(), filePath));
         }
         FileUtils.copyInputStreamToFile(inputStream, new File(this.docPath + File.separator + fileName));
+    }
+
+    private String getPluginName(String pluginName) throws IOException {
+        final String osName = System.getProperty("os.name");
+        final Map<String, Map<String, String>> pluginsMap = new HashMap<>();
+        final HashMap<String, String> windowsPluginMap = new HashMap<>();
+        windowsPluginMap.put(Constant.PROTOC, "protoc-3.19.3-windows-x86_64.exe");
+        windowsPluginMap.put(Constant.PROTOC_GEN_DOC, "protoc-gen-doc_1.5.1_windows_amd64.exe");
+        final HashMap<String, String> linuxPluginMap = new HashMap<>();
+        linuxPluginMap.put(Constant.PROTOC, "protoc-3.19.3-linux-x86_64");
+        linuxPluginMap.put(Constant.PROTOC_GEN_DOC, "protoc-gen-doc_1.5.1_linux_amd64");
+        pluginsMap.put("Windows", windowsPluginMap);
+        pluginsMap.put("Linux", linuxPluginMap);
+        final String systemKey = pluginsMap.keySet()
+                .stream()
+                .filter(key -> key.contains(osName))
+                .findFirst()
+                .orElseThrow(() -> new IOException(String.format(MessageStr.NONSUPPORT_SYSTEM.getMessage(), osName)));
+        final Map<String, String> pluginMap = pluginsMap.get(systemKey);
+        return pluginMap.get(pluginName);
     }
 }

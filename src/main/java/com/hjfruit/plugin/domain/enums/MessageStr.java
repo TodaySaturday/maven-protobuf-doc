@@ -24,6 +24,8 @@ public enum MessageStr {
 
     CONNECTION_TIMEOUT("连接超时"),
 
+    NONSUPPORT_SYSTEM("暂不支持%s操作系统"),
+
     ;
 
     private final String message;

@@ -37,10 +37,6 @@ public abstract class Constant {
 
     public static final String PLUGIN_DIRECTORY = "/plugin/";
 
-    public static final String PROTOC_FILE_NAME = "protoc-3.19.3-windows-x86_64.exe";
-
-    public static final String PROTOC_GEN_DOC_FILE_NAME = "protoc-gen-doc.exe";
-
     public static final String TEMPLATE_FILE_NAME = "protobuf.ftl";
 
     public static final String TEMPLATE_DIRECTORY = "/template/" + TEMPLATE_FILE_NAME;
@@ -50,4 +46,8 @@ public abstract class Constant {
     public static final String PROPERTIES_URL_FORMAT = "apiUrlFormat";
 
     public static final String PROTO_SUFFIX = ".proto";
+
+    public static final String PROTOC = "PROTOC";
+
+    public static final String PROTOC_GEN_DOC = "PROTOC_GEN_DOC";
 }
