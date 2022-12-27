@@ -50,4 +50,8 @@ public abstract class Constant {
     public static final String PROTOC = "PROTOC";
 
     public static final String PROTOC_GEN_DOC = "PROTOC_GEN_DOC";
+
+    public static final String WINDOWS = "Windows";
+
+    public static final String LINUX = "Linux";
 }

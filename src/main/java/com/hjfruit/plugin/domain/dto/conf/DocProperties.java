@@ -131,7 +131,7 @@ public class DocProperties {
         }
         final File file = new File(this.docPath + File.separator + fileName);
         // linux需要配置文件权限
-        if (getSystem().contains("Linux")) {
+        if (getSystem().contains(Constant.LINUX)) {
             file.setExecutable(true);
             file.setReadable(true);
             file.setWritable(true);
@@ -148,8 +148,8 @@ public class DocProperties {
         final HashMap<String, String> linuxPluginMap = new HashMap<>();
         linuxPluginMap.put(Constant.PROTOC, "protoc-3.19.3-linux-x86_64");
         linuxPluginMap.put(Constant.PROTOC_GEN_DOC, "protoc-gen-doc_1.5.1_linux_amd64");
-        pluginsMap.put("Windows", windowsPluginMap);
-        pluginsMap.put("Linux", linuxPluginMap);
+        pluginsMap.put(Constant.WINDOWS, windowsPluginMap);
+        pluginsMap.put(Constant.LINUX, linuxPluginMap);
         final String systemKey = pluginsMap.keySet()
                 .stream()
                 .filter(osName::contains)
