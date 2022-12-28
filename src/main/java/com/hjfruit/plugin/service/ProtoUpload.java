@@ -2,10 +2,10 @@ package com.hjfruit.plugin.service;
 
 import com.alibaba.fastjson.JSON;
 import com.hjfruit.plugin.ProtoDocMojo;
-import com.hjfruit.plugin.domain.dto.conf.DocUpload;
-import com.hjfruit.plugin.domain.dto.http.HttpResp;
-import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import com.hjfruit.plugin.domain.utils.HttpUtils;
+import com.hjfruit.plugin.domain.conf.DocUpload;
+import com.hjfruit.plugin.domain.http.HttpResp;
+import com.hjfruit.plugin.enums.ProtoProcess;
+import com.hjfruit.plugin.utils.HttpUtils;
 
 import java.net.SocketTimeoutException;
 import java.util.Collection;

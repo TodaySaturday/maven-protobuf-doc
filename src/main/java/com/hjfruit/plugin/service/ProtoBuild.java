@@ -1,13 +1,13 @@
 package com.hjfruit.plugin.service;
 
 import com.hjfruit.plugin.ProtoDocMojo;
-import com.hjfruit.plugin.domain.constant.Constant;
-import com.hjfruit.plugin.domain.dto.conf.DocUpload;
-import com.hjfruit.plugin.domain.dto.handle.*;
-import com.hjfruit.plugin.domain.enums.MessageStr;
-import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import com.hjfruit.plugin.domain.utils.FileUtils;
-import com.hjfruit.plugin.domain.utils.StrExpUtils;
+import com.hjfruit.plugin.constant.Constant;
+import com.hjfruit.plugin.domain.conf.DocUpload;
+import com.hjfruit.plugin.domain.handle.*;
+import com.hjfruit.plugin.enums.MessageStr;
+import com.hjfruit.plugin.enums.ProtoProcess;
+import com.hjfruit.plugin.utils.FileUtils;
+import com.hjfruit.plugin.utils.StrExpUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 

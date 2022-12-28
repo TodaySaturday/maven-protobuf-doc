@@ -1,4 +1,4 @@
-package com.hjfruit.plugin.domain.utils;
+package com.hjfruit.plugin.utils;
 
 /**
  * @author xianping

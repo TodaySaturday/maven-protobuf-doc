@@ -1,4 +1,4 @@
-package com.hjfruit.plugin.domain.enums;
+package com.hjfruit.plugin.enums;
 
 /**
  * @author xianping

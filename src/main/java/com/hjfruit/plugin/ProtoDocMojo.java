@@ -1,13 +1,13 @@
 package com.hjfruit.plugin;
 
-import com.hjfruit.plugin.domain.constant.Constant;
-import com.hjfruit.plugin.domain.dto.conf.DocProperties;
-import com.hjfruit.plugin.domain.dto.conf.DocUpload;
-import com.hjfruit.plugin.domain.dto.http.HttpResp;
-import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import com.hjfruit.plugin.domain.utils.ConfigUtils;
-import com.hjfruit.plugin.domain.utils.FileUtils;
+import com.hjfruit.plugin.constant.Constant;
+import com.hjfruit.plugin.domain.conf.DocProperties;
+import com.hjfruit.plugin.domain.conf.DocUpload;
+import com.hjfruit.plugin.domain.http.HttpResp;
+import com.hjfruit.plugin.enums.ProtoProcess;
 import com.hjfruit.plugin.service.*;
+import com.hjfruit.plugin.utils.ConfigUtils;
+import com.hjfruit.plugin.utils.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;

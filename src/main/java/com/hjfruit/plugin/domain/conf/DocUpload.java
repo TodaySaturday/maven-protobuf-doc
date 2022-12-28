@@ -1,4 +1,4 @@
-package com.hjfruit.plugin.domain.dto.conf;
+package com.hjfruit.plugin.domain.conf;
 
 /**
  * @author xianping

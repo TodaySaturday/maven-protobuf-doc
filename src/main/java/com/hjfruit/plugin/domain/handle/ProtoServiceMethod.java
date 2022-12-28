@@ -1,6 +1,6 @@
-package com.hjfruit.plugin.domain.dto.handle;
+package com.hjfruit.plugin.domain.handle;
 
-import com.hjfruit.plugin.domain.constant.Constant;
+import com.hjfruit.plugin.constant.Constant;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

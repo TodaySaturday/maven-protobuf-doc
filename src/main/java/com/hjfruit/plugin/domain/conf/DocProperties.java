@@ -1,8 +1,8 @@
-package com.hjfruit.plugin.domain.dto.conf;
+package com.hjfruit.plugin.domain.conf;
 
-import com.hjfruit.plugin.domain.constant.Constant;
-import com.hjfruit.plugin.domain.enums.MessageStr;
-import com.hjfruit.plugin.domain.utils.FileUtils;
+import com.hjfruit.plugin.constant.Constant;
+import com.hjfruit.plugin.enums.MessageStr;
+import com.hjfruit.plugin.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;

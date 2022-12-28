@@ -1,4 +1,4 @@
-package com.hjfruit.plugin.domain.dto.handle;
+package com.hjfruit.plugin.domain.handle;
 
 import java.util.Collection;
 

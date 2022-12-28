@@ -1,4 +1,4 @@
-package com.hjfruit.plugin.domain.constant;
+package com.hjfruit.plugin.constant;
 
 import java.io.File;
 

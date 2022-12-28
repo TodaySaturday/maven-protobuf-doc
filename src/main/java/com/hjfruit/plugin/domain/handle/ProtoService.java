@@ -1,17 +1,17 @@
-package com.hjfruit.plugin.domain.dto.handle;
+package com.hjfruit.plugin.domain.handle;
 
 import java.util.Collection;
 
 /**
  * @author xianping
- * 2022/7/422:43
+ * 2022/7/422:48
  */
-public class ProtoEnum {
+public class ProtoService {
     private String name;
     private String longName;
     private String fullName;
     private String description;
-    private Collection<ProtoEnumValue> values;
+    private Collection<ProtoServiceMethod> methods;
 
     public String getName() {
         return name;
@@ -45,11 +45,11 @@ public class ProtoEnum {
         this.description = description;
     }
 
-    public Collection<ProtoEnumValue> getValues() {
-        return values;
+    public Collection<ProtoServiceMethod> getMethods() {
+        return methods;
     }
 
-    public void setValues(Collection<ProtoEnumValue> values) {
-        this.values = values;
+    public void setMethods(Collection<ProtoServiceMethod> methods) {
+        this.methods = methods;
     }
 }

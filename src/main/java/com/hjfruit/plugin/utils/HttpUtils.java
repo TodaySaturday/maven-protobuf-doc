@@ -1,7 +1,7 @@
-package com.hjfruit.plugin.domain.utils;
+package com.hjfruit.plugin.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.hjfruit.plugin.domain.enums.MessageStr;
+import com.hjfruit.plugin.enums.MessageStr;
 
 import java.io.*;
 import java.net.HttpURLConnection;

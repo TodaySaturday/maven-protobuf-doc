@@ -2,10 +2,10 @@ package com.hjfruit.plugin.service;
 
 import com.alibaba.fastjson.JSON;
 import com.hjfruit.plugin.ProtoDocMojo;
-import com.hjfruit.plugin.domain.dto.handle.*;
-import com.hjfruit.plugin.domain.enums.MessageStr;
-import com.hjfruit.plugin.domain.enums.ProtoProcess;
-import com.hjfruit.plugin.domain.utils.FileUtils;
+import com.hjfruit.plugin.domain.handle.*;
+import com.hjfruit.plugin.enums.MessageStr;
+import com.hjfruit.plugin.enums.ProtoProcess;
+import com.hjfruit.plugin.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
