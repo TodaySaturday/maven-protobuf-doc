@@ -84,9 +84,9 @@ public class ProtoModel {
 
     public String getServiceDescription() {
         //正则表达式
-        String regEx = "[\n`~!@#$%^&*()+=\\-_|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。， 、？]";
+        String regEx = "[\\\\/:*\"<>|]";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(serviceDescription);
-        return matcher.replaceAll(Constant.EMPTY).trim();
+        return matcher.replaceAll(Constant.SPACE).trim();
     }
 }

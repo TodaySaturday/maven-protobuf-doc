@@ -15,6 +15,8 @@ public abstract class Constant {
 
     public static final String EMPTY = "";
 
+    public static final String SPACE = " ";
+
     public static final String DOCS = SLASH + "docs";
 
     public static final String DOCS_JSON = DOCS + SLASH + "json";
