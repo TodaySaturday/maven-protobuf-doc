@@ -87,6 +87,6 @@ public class ProtoModel {
         String regEx = "[\\\\/:*\"<>|]";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(serviceDescription);
-        return matcher.replaceAll(Constant.SPACE).trim();
+        return matcher.replaceAll(Constant.SPACE);
     }
 }
