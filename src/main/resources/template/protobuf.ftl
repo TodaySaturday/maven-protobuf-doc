@@ -12,12 +12,12 @@
 
 - `${request.fullName}`
 
-| 参数名称 | 参数类型 | 参数标签 | 参数说明 |
-| :------: | :------: | :------: | :------: |
+| 参数名称 | 参数类型 | 参数标签 | 是否必填 | 参数说明 |
+| :------: | :------: | :------: | :------: | :------: |
 <#if (request.fields?size>0)>
-<#list request.fields as field>
-|    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     <#if field.description==''||request.fullName=='google.protobuf.Any'>${'<span></span>'}<#else>${field.description}</#if>     |
-</#list>
+    <#list request.fields as field>
+        |    ${field.name}      |     <#if field.fullType?contains(".")> ${"[${field.fullType}](#${field.fullType})"} <#else> ${field.fullType} </#if>     |     ${field.label}     |     <#if field.description?starts_with('#')>是<#else>否</#if>     |     <#if field.description==''||request.fullName=='google.protobuf.Any'>${'<span></span>'}<#elseif field.description?starts_with('#')>${field.description?replace('#','')}<#else>${field.description}</#if>     |
+    </#list>
 </#if>
 
 #### 返回参数说明
